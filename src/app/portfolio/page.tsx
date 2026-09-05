@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -8,11 +8,14 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import IntroBot from "@/components/chat/IntroBot";
 import BeforeAfterSlider from "@/components/home/BeforeAfterSlider";
+import Image3DModal from "@/components/3d/Image3DModal";
 import {
   Compass,
   ArrowUpRight,
   MapPin,
   Calendar,
+  Box,
+  Maximize2
 } from "lucide-react";
 
 const portfolioProjects = [
@@ -24,6 +27,7 @@ const portfolioProjects = [
     category: "Residential Architecture",
     description: "Full interior transformation of a 320sqm private residence using solid white oak timber, micro-cement walls, and bespoke GRAINS curved sofas.",
     image: "/assets/IMG_20260905_235301_126.jpg",
+    modelCategory: "sofa" as const,
   },
   {
     id: "milan-penthouse",
@@ -33,6 +37,7 @@ const portfolioProjects = [
     category: "Penthouse Design",
     description: "Sleek obsidian wood panels, custom sculptural lighting, and high-contrast charcoal wool seating in a sunlit rooftop interior.",
     image: "/assets/IMG_20260905_235328_390.jpg",
+    modelCategory: "interior" as const,
   },
   {
     id: "geneva-lakeside",
@@ -42,6 +47,7 @@ const portfolioProjects = [
     category: "Luxury Retreat",
     description: "Fluted travertine fireplaces, floating minimal platform beds, and floor-to-ceiling glass framed by reclaimed European oak.",
     image: "/assets/IMG_20260905_235333_698.jpg",
+    modelCategory: "bed" as const,
   },
   {
     id: "tribeca-duplex",
@@ -51,10 +57,13 @@ const portfolioProjects = [
     category: "Urban Residence",
     description: "Restoration of original exposed brick combined with GRAINS custom 3D furniture models and warm ambient lighting brass fixtures.",
     image: "/assets/IMG_20260905_235345_105.jpg",
+    modelCategory: "table" as const,
   },
 ];
 
 export default function PortfolioPage() {
+  const [activeProject, setActiveProject] = useState<typeof portfolioProjects[0] | null>(null);
+
   return (
     <div className="min-h-screen bg-[#F5F2EB] text-[#1C1917] font-sans antialiased selection:bg-[#9A7B56] selection:text-white">
       <Navbar />
@@ -70,7 +79,7 @@ export default function PortfolioPage() {
               Selected Architectural Case Studies
             </h1>
             <p className="text-base text-[#1C1917]/70 font-light leading-relaxed">
-              Explore how GRAINS merges custom 3D spatial design, natural timber grains, and luxury interior curation across global residences.
+              Click any project image to open an interactive 3D WebGL volumetric layout modal.
             </p>
           </div>
         </div>
@@ -88,15 +97,26 @@ export default function PortfolioPage() {
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
                 className="bg-[#EFECE4] rounded-3xl overflow-hidden border border-[#1C1917]/10 flex flex-col justify-between group hover:shadow-2xl transition-all duration-300"
               >
-                <div className="relative h-80 sm:h-96 w-full overflow-hidden">
+                <div
+                  onClick={() => setActiveProject(project)}
+                  className="relative h-80 sm:h-96 w-full overflow-hidden cursor-pointer"
+                >
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute top-4 left-4 bg-[#1C1917]/80 backdrop-blur-md text-white text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full border border-[#9A7B56]/30">
-                    {project.category}
+                  <div className="absolute top-4 left-4 bg-[#1C1917]/80 backdrop-blur-md text-white text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full border border-[#9A7B56]/30 flex items-center gap-1.5">
+                    <Box className="w-3.5 h-3.5 text-[#9A7B56]" />
+                    <span>3D Model</span>
+                  </div>
+
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="px-4 py-2 bg-[#1C1917] text-white text-xs font-mono uppercase tracking-wider rounded-full flex items-center gap-2 shadow-xl">
+                      <Maximize2 className="w-3.5 h-3.5 text-[#9A7B56]" />
+                      <span>View Interactive 3D</span>
+                    </div>
                   </div>
                 </div>
 
@@ -112,7 +132,10 @@ export default function PortfolioPage() {
                     </span>
                   </div>
 
-                  <h3 className="font-serif-grains text-2xl font-bold text-[#1C1917] group-hover:text-[#9A7B56] transition-colors">
+                  <h3
+                    onClick={() => setActiveProject(project)}
+                    className="font-serif-grains text-2xl font-bold text-[#1C1917] group-hover:text-[#9A7B56] transition-colors cursor-pointer"
+                  >
                     {project.title}
                   </h3>
 
@@ -121,14 +144,17 @@ export default function PortfolioPage() {
                   </p>
 
                   <div className="pt-4 border-t border-[#1C1917]/10 flex items-center justify-between">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#1C1917]/50">
-                      GRAINS 3D Architecture
-                    </span>
+                    <button
+                      onClick={() => setActiveProject(project)}
+                      className="text-[10px] font-mono uppercase tracking-widest text-[#9A7B56] font-semibold hover:underline"
+                    >
+                      Launch 3D Room Viewer
+                    </button>
                     <Link
                       href="/contact"
                       className="inline-flex items-center gap-1 text-xs uppercase tracking-widest font-semibold text-[#1C1917] hover:text-[#9A7B56] transition-colors"
                     >
-                      <span>Inquire Similar Design</span>
+                      <span>Inquire Design</span>
                       <ArrowUpRight className="w-4 h-4" />
                     </Link>
                   </div>
@@ -150,6 +176,18 @@ export default function PortfolioPage() {
           </div>
         </div>
       </section>
+
+      {activeProject && (
+        <Image3DModal
+          isOpen={!!activeProject}
+          onClose={() => setActiveProject(null)}
+          title={activeProject.title}
+          category={activeProject.modelCategory}
+          imageSrc={activeProject.image}
+          materials="European White Oak, Micro-cement, Honed Travertine"
+          dimensions="Full Interior Architecture Layout"
+        />
+      )}
 
       <IntroBot />
       <Footer />
