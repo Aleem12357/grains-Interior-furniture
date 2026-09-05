@@ -7,11 +7,13 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import IntroBot from "@/components/chat/IntroBot";
-import { products } from "@/data/products";
+import Image3DModal from "@/components/3d/Image3DModal";
+import { products, Product } from "@/data/products";
 import {
   Box,
   Search,
   ArrowUpRight,
+  Maximize2
 } from "lucide-react";
 
 const categories = [
@@ -27,6 +29,8 @@ export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc">("featured");
+
+  const [activeModalProduct, setActiveModalProduct] = useState<Product | null>(null);
 
   const filteredProducts = products
     .filter((p) => {
@@ -57,7 +61,7 @@ export default function ProductsPage() {
               Curated Collections for Elevated Living
             </h1>
             <p className="text-base text-[#1C1917]/70 font-light leading-relaxed">
-              Explore our architectural furniture designs with 3D webGL rotation, material specifications, and handcrafted timber details.
+              Click any furniture item or image to launch an interactive 360° WebGL 3D model modal.
             </p>
           </div>
         </div>
@@ -140,7 +144,10 @@ export default function ProductsPage() {
                   transition={{ duration: 0.4 }}
                   className="bg-[#EFECE4] rounded-3xl overflow-hidden border border-[#1C1917]/10 flex flex-col justify-between group shadow-sm hover:shadow-2xl transition-all duration-300"
                 >
-                  <div className="relative h-72 w-full overflow-hidden bg-white">
+                  <div
+                    onClick={() => setActiveModalProduct(product)}
+                    className="relative h-72 w-full overflow-hidden bg-white cursor-pointer"
+                  >
                     <Image
                       src={product.image}
                       alt={product.name}
@@ -149,17 +156,27 @@ export default function ProductsPage() {
                     />
                     <div className="absolute top-4 left-4 bg-[#1C1917]/80 backdrop-blur-md text-[#F5F2EB] text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full border border-[#9A7B56]/30 flex items-center gap-1.5">
                       <Box className="w-3.5 h-3.5 text-[#9A7B56]" />
-                      <span>3D Viewable</span>
+                      <span>3D View</span>
                     </div>
 
                     <div className="absolute top-4 right-4 bg-[#9A7B56] text-white text-[10px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-full">
                       {product.categoryLabel}
                     </div>
+
+                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <div className="px-4 py-2 bg-[#1C1917] text-white text-xs font-mono uppercase tracking-wider rounded-full flex items-center gap-2 shadow-xl">
+                        <Maximize2 className="w-3.5 h-3.5 text-[#9A7B56]" />
+                        <span>Launch 3D Modal</span>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                     <div>
-                      <h3 className="font-serif-grains text-xl font-bold text-[#1C1917] group-hover:text-[#9A7B56] transition-colors">
+                      <h3
+                        onClick={() => setActiveModalProduct(product)}
+                        className="font-serif-grains text-xl font-bold text-[#1C1917] group-hover:text-[#9A7B56] transition-colors cursor-pointer"
+                      >
                         {product.name}
                       </h3>
                       <p className="text-xs text-[#1C1917]/70 font-light mt-2 line-clamp-2 leading-relaxed">
@@ -188,13 +205,13 @@ export default function ProductsPage() {
                         </span>
                       </div>
 
-                      <Link
-                        href={`/products/${product.id}`}
+                      <button
+                        onClick={() => setActiveModalProduct(product)}
                         className="px-5 py-2.5 bg-[#1C1917] text-white hover:bg-[#9A7B56] rounded-full text-xs uppercase tracking-widest font-semibold transition-all duration-300 flex items-center gap-1.5 group/btn shadow-md"
                       >
                         <span>Interactive 3D</span>
                         <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </motion.div>
@@ -203,6 +220,20 @@ export default function ProductsPage() {
           )}
         </div>
       </section>
+
+      {/* Interactive 3D Modal */}
+      {activeModalProduct && (
+        <Image3DModal
+          isOpen={!!activeModalProduct}
+          onClose={() => setActiveModalProduct(null)}
+          title={activeModalProduct.name}
+          category={activeModalProduct.modelCategory}
+          imageSrc={activeModalProduct.image}
+          materials={activeModalProduct.materials}
+          dimensions={activeModalProduct.dimensions}
+          price={activeModalProduct.price}
+        />
+      )}
 
       <IntroBot />
       <Footer />

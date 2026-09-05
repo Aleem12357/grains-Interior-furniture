@@ -8,7 +8,7 @@ export type Product = {
   materials: string;
   dimensions: string;
   image: string;
-  fallback3dModel?: string;
+  modelCategory: "sofa" | "table" | "chair" | "lighting" | "credenza" | "bed" | "armchair" | "interior";
   isFeatured?: boolean;
   designer: string;
 };
@@ -24,6 +24,7 @@ export const products: Product[] = [
     materials: "Textured Bouclé, Italian Walnut, High-Density Latex",
     dimensions: "240cm W x 105cm D x 78cm H",
     image: "/assets/IMG_20260905_235158_062.jpg",
+    modelCategory: "sofa",
     isFeatured: true,
     designer: "Studio GRAINS, 2024",
   },
@@ -37,6 +38,7 @@ export const products: Product[] = [
     materials: "Solid White Oak, Natural Organic Oil Finish",
     dimensions: "220cm L x 100cm W x 75cm H",
     image: "/assets/IMG_20260905_235158_063.jpg",
+    modelCategory: "table",
     isFeatured: true,
     designer: "Kaito Morimoto",
   },
@@ -50,6 +52,7 @@ export const products: Product[] = [
     materials: "Charcoal Wool, Ash Wood, Brass Fasteners",
     dimensions: "85cm W x 88cm D x 72cm H",
     image: "/assets/IMG_20260905_235158_142.jpg",
+    modelCategory: "chair",
     isFeatured: true,
     designer: "Elena Rostova",
   },
@@ -63,6 +66,7 @@ export const products: Product[] = [
     materials: "Brushed Brass, Hand-Blown Frosted Glass",
     dimensions: "60cm Diameter x 80cm Drop Length",
     image: "/assets/IMG_20260905_235158_149.jpg",
+    modelCategory: "lighting",
     isFeatured: true,
     designer: "Studio GRAINS",
   },
@@ -76,6 +80,7 @@ export const products: Product[] = [
     materials: "Reclaimed Teak Wood, Italian Travertine Marble",
     dimensions: "180cm W x 45cm D x 75cm H",
     image: "/assets/IMG_20260905_235158_176.jpg",
+    modelCategory: "credenza",
     isFeatured: true,
     designer: "Marcus Vance",
   },
@@ -89,6 +94,7 @@ export const products: Product[] = [
     materials: "European Oak, Belgian Organic Linen",
     dimensions: "200cm W x 220cm L x 90cm Headboard H",
     image: "/assets/IMG_20260905_235227_630.jpg",
+    modelCategory: "bed",
     isFeatured: true,
     designer: "Studio GRAINS",
   },
@@ -102,6 +108,7 @@ export const products: Product[] = [
     materials: "Solid Oak, Cream Linen Blend Upholstery",
     dimensions: "92cm W x 95cm D x 78cm H",
     image: "/assets/IMG_20260905_235233_085.jpg",
+    modelCategory: "armchair",
     isFeatured: false,
     designer: "Kaito Morimoto",
   },
@@ -115,6 +122,7 @@ export const products: Product[] = [
     materials: "Steam-bent Oak, Charcoal Fabric Seat",
     dimensions: "55cm W x 52cm D x 78cm H",
     image: "/assets/IMG_20260905_235243_919.jpg",
+    modelCategory: "chair",
     isFeatured: false,
     designer: "Elena Rostova",
   },
