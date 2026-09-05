@@ -1,0 +1,158 @@
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import IntroBot from "@/components/chat/IntroBot";
+import BeforeAfterSlider from "@/components/home/BeforeAfterSlider";
+import {
+  Compass,
+  ArrowUpRight,
+  MapPin,
+  Calendar,
+} from "lucide-react";
+
+const portfolioProjects = [
+  {
+    id: "kyoto-sanctuary",
+    title: "Kyoto Organic Japandi Villa",
+    location: "Kyoto, Japan",
+    year: "2024",
+    category: "Residential Architecture",
+    description: "Full interior transformation of a 320sqm private residence using solid white oak timber, micro-cement walls, and bespoke GRAINS curved sofas.",
+    image: "/assets/IMG_20260905_235301_126.jpg",
+  },
+  {
+    id: "milan-penthouse",
+    title: "Milan Architectural Loft",
+    location: "Milan, Italy",
+    year: "2024",
+    category: "Penthouse Design",
+    description: "Sleek obsidian wood panels, custom sculptural lighting, and high-contrast charcoal wool seating in a sunlit rooftop interior.",
+    image: "/assets/IMG_20260905_235328_390.jpg",
+  },
+  {
+    id: "geneva-lakeside",
+    title: "Geneva Lakeside Sanctuary",
+    location: "Geneva, Switzerland",
+    year: "2023",
+    category: "Luxury Retreat",
+    description: "Fluted travertine fireplaces, floating minimal platform beds, and floor-to-ceiling glass framed by reclaimed European oak.",
+    image: "/assets/IMG_20260905_235333_698.jpg",
+  },
+  {
+    id: "tribeca-duplex",
+    title: "Tribeca Heritage Duplex",
+    location: "New York, USA",
+    year: "2023",
+    category: "Urban Residence",
+    description: "Restoration of original exposed brick combined with GRAINS custom 3D furniture models and warm ambient lighting brass fixtures.",
+    image: "/assets/IMG_20260905_235345_105.jpg",
+  },
+];
+
+export default function PortfolioPage() {
+  return (
+    <div className="min-h-screen bg-[#F5F2EB] text-[#1C1917] font-sans antialiased selection:bg-[#9A7B56] selection:text-white">
+      <Navbar />
+
+      <section className="pt-32 pb-16 bg-[#EFECE4] border-b border-[#1C1917]/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9A7B56]/15 border border-[#9A7B56]/30 text-xs font-mono uppercase tracking-widest text-[#9A7B56]">
+              <Compass className="w-3.5 h-3.5" />
+              <span>Interior Architecture Portfolio</span>
+            </div>
+            <h1 className="font-serif-grains text-4xl sm:text-5xl font-bold text-[#1C1917] tracking-tight">
+              Selected Architectural Case Studies
+            </h1>
+            <p className="text-base text-[#1C1917]/70 font-light leading-relaxed">
+              Explore how GRAINS merges custom 3D spatial design, natural timber grains, and luxury interior curation across global residences.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-[#F5F2EB]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {portfolioProjects.map((project, idx) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                className="bg-[#EFECE4] rounded-3xl overflow-hidden border border-[#1C1917]/10 flex flex-col justify-between group hover:shadow-2xl transition-all duration-300"
+              >
+                <div className="relative h-80 sm:h-96 w-full overflow-hidden">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute top-4 left-4 bg-[#1C1917]/80 backdrop-blur-md text-white text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full border border-[#9A7B56]/30">
+                    {project.category}
+                  </div>
+                </div>
+
+                <div className="p-8 space-y-4">
+                  <div className="flex items-center justify-between text-xs text-[#9A7B56] font-mono uppercase tracking-wider">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5" />
+                      {project.location}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {project.year}
+                    </span>
+                  </div>
+
+                  <h3 className="font-serif-grains text-2xl font-bold text-[#1C1917] group-hover:text-[#9A7B56] transition-colors">
+                    {project.title}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-[#1C1917]/70 font-light leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  <div className="pt-4 border-t border-[#1C1917]/10 flex items-center justify-between">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#1C1917]/50">
+                      GRAINS 3D Architecture
+                    </span>
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center gap-1 text-xs uppercase tracking-widest font-semibold text-[#1C1917] hover:text-[#9A7B56] transition-colors"
+                    >
+                      <span>Inquire Similar Design</span>
+                      <ArrowUpRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="pt-12 border-t border-[#1C1917]/10 space-y-8">
+            <div className="text-center max-w-xl mx-auto space-y-2">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#9A7B56]">
+                Interactive Showcase
+              </span>
+              <h2 className="font-serif-grains text-3xl font-bold text-[#1C1917]">
+                Live Before & After Renovation
+              </h2>
+            </div>
+            <BeforeAfterSlider />
+          </div>
+        </div>
+      </section>
+
+      <IntroBot />
+      <Footer />
+    </div>
+  );
+}
