@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  MessageSquare,
   X,
   Sparkles,
   Send,
@@ -61,9 +60,15 @@ const initialMessages: Message[] = [
         href: "/portfolio",
       },
     ],
-    timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    timestamp: "Just now",
   },
 ];
+
+let messageCounter = 100;
+function getNextMessageId(): string {
+  messageCounter += 1;
+  return `msg_${messageCounter}_${Math.random().toString(36).substring(2, 7)}`;
+}
 
 export default function IntroBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -84,10 +89,10 @@ export default function IntroBot() {
 
   const handleOptionClick = (option: Option) => {
     const userMsg: Message = {
-      id: Date.now().toString(),
+      id: getNextMessageId(),
       sender: "user",
       text: option.label,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      timestamp: "Just now",
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -98,18 +103,18 @@ export default function IntroBot() {
 
       if (option.value === "catalog") {
         botResponse = {
-          id: (Date.now() + 1).toString(),
+          id: getNextMessageId(),
           sender: "bot",
           text: "Explore our curated 3D furniture collections with interactive rotation and custom material specifications.",
           options: [
             { label: "Go to Collections Page", value: "go_catalog", href: "/products" },
             { label: "Ask Another Question", value: "restart" },
           ],
-          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          timestamp: "Just now",
         };
       } else if (option.value === "quiz") {
         botResponse = {
-          id: (Date.now() + 1).toString(),
+          id: getNextMessageId(),
           sender: "bot",
           text: "What best describes your ideal living atmosphere?",
           options: [
@@ -117,36 +122,36 @@ export default function IntroBot() {
             { label: "Sleek Architectural Minimalism", value: "quiz_minimalist" },
             { label: "Luxury Mid-Century Craft", value: "quiz_midcentury" },
           ],
-          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          timestamp: "Just now",
         };
       } else if (option.value.startsWith("quiz_")) {
         botResponse = {
-          id: (Date.now() + 1).toString(),
+          id: getNextMessageId(),
           sender: "bot",
           text: "Excellent choice! Our designers specialize in creating harmonious spaces with solid white oak, charcoal wool accents, and ambient lighting tailored to that exact aesthetic.",
           options: [
             { label: "Book Consultation for this Style", value: "consultation", href: "/contact" },
             { label: "Browse Catalog", value: "catalog", href: "/products" },
           ],
-          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          timestamp: "Just now",
         };
       } else if (option.value === "consultation") {
         botResponse = {
-          id: (Date.now() + 1).toString(),
+          id: getNextMessageId(),
           sender: "bot",
           text: "We offer private 1-on-1 consultations with our senior interior architects. Click below to reserve your slot.",
           options: [
             { label: "Book Free Consultation", value: "go_contact", href: "/contact" },
           ],
-          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          timestamp: "Just now",
         };
       } else {
         botResponse = {
-          id: (Date.now() + 1).toString(),
+          id: getNextMessageId(),
           sender: "bot",
           text: "How else can I assist your design journey?",
           options: initialMessages[0].options,
-          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          timestamp: "Just now",
         };
       }
 
@@ -163,10 +168,10 @@ export default function IntroBot() {
     setInputValue("");
 
     const userMsg: Message = {
-      id: Date.now().toString(),
+      id: getNextMessageId(),
       sender: "user",
       text: userText,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      timestamp: "Just now",
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -174,14 +179,14 @@ export default function IntroBot() {
 
     setTimeout(() => {
       const botResponse: Message = {
-        id: (Date.now() + 1).toString(),
+        id: getNextMessageId(),
         sender: "bot",
         text: `Thank you for asking about "${userText}". Our design team can customize dimensions, materials, and lighting for your specific layout.`,
         options: [
           { label: "Explore Collections", value: "catalog", href: "/products" },
           { label: "Schedule Consultation", value: "consultation", href: "/contact" },
         ],
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        timestamp: "Just now",
       };
 
       setMessages((prev) => [...prev, botResponse]);
