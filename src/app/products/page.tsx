@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
@@ -104,7 +103,7 @@ export default function ProductsPage() {
 
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
+                onChange={(e) => setSortBy(e.target.value as "featured" | "price-asc" | "price-desc")}
                 className="bg-[#EFECE4] border border-[#1C1917]/15 rounded-full px-4 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#9A7B56] font-medium"
               >
                 <option value="featured">Sort by: Featured</option>

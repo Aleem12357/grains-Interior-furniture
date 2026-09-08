@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  MessageSquare,
   X,
   Sparkles,
   Send,
@@ -83,11 +82,12 @@ export default function IntroBot() {
   }, [messages, isOpen]);
 
   const handleOptionClick = (option: Option) => {
+    const timestamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     const userMsg: Message = {
-      id: Date.now().toString(),
+      id: `user-${messages.length + 1}`,
       sender: "user",
       text: option.label,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      timestamp,
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -98,7 +98,7 @@ export default function IntroBot() {
 
       if (option.value === "catalog") {
         botResponse = {
-          id: (Date.now() + 1).toString(),
+          id: `bot-${messages.length + 2}`,
           sender: "bot",
           text: "Explore our curated 3D furniture collections with interactive rotation and custom material specifications.",
           options: [
@@ -109,7 +109,7 @@ export default function IntroBot() {
         };
       } else if (option.value === "quiz") {
         botResponse = {
-          id: (Date.now() + 1).toString(),
+          id: `bot-${messages.length + 2}`,
           sender: "bot",
           text: "What best describes your ideal living atmosphere?",
           options: [
@@ -121,7 +121,7 @@ export default function IntroBot() {
         };
       } else if (option.value.startsWith("quiz_")) {
         botResponse = {
-          id: (Date.now() + 1).toString(),
+          id: `bot-${messages.length + 2}`,
           sender: "bot",
           text: "Excellent choice! Our designers specialize in creating harmonious spaces with solid white oak, charcoal wool accents, and ambient lighting tailored to that exact aesthetic.",
           options: [
@@ -132,7 +132,7 @@ export default function IntroBot() {
         };
       } else if (option.value === "consultation") {
         botResponse = {
-          id: (Date.now() + 1).toString(),
+          id: `bot-${messages.length + 2}`,
           sender: "bot",
           text: "We offer private 1-on-1 consultations with our senior interior architects. Click below to reserve your slot.",
           options: [
@@ -142,7 +142,7 @@ export default function IntroBot() {
         };
       } else {
         botResponse = {
-          id: (Date.now() + 1).toString(),
+          id: `bot-${messages.length + 2}`,
           sender: "bot",
           text: "How else can I assist your design journey?",
           options: initialMessages[0].options,
@@ -162,11 +162,12 @@ export default function IntroBot() {
     const userText = inputValue;
     setInputValue("");
 
+    const timestamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     const userMsg: Message = {
-      id: Date.now().toString(),
+      id: `user-${messages.length + 1}`,
       sender: "user",
       text: userText,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      timestamp,
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -174,7 +175,7 @@ export default function IntroBot() {
 
     setTimeout(() => {
       const botResponse: Message = {
-        id: (Date.now() + 1).toString(),
+        id: `bot-${messages.length + 2}`,
         sender: "bot",
         text: `Thank you for asking about "${userText}". Our design team can customize dimensions, materials, and lighting for your specific layout.`,
         options: [
