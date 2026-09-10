@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
@@ -52,7 +51,12 @@ export default function ProductsPage() {
 
       <section className="pt-32 pb-16 bg-[#EFECE4] border-b border-[#1C1917]/10 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="max-w-3xl space-y-4"
+          >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9A7B56]/15 border border-[#9A7B56]/30 text-xs font-mono uppercase tracking-widest text-[#9A7B56]">
               <Box className="w-3.5 h-3.5" />
               <span>Interactive 3D Catalog</span>
@@ -63,7 +67,7 @@ export default function ProductsPage() {
             <p className="text-base text-[#1C1917]/70 font-light leading-relaxed">
               Click any furniture item or image to launch an interactive 360° WebGL 3D model modal.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -104,7 +108,7 @@ export default function ProductsPage() {
 
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
+                onChange={(e) => setSortBy(e.target.value as "featured" | "price-asc" | "price-desc")}
                 className="bg-[#EFECE4] border border-[#1C1917]/15 rounded-full px-4 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#9A7B56] font-medium"
               >
                 <option value="featured">Sort by: Featured</option>

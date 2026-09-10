@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import IntroBot from "@/components/chat/IntroBot";
@@ -23,7 +24,12 @@ export default function ContactPage() {
 
       <section className="pt-32 pb-16 bg-[#EFECE4] border-b border-[#1C1917]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="max-w-3xl space-y-4"
+          >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9A7B56]/15 border border-[#9A7B56]/30 text-xs font-mono uppercase tracking-widest text-[#9A7B56]">
               <Calendar className="w-3.5 h-3.5" />
               <span>Architectural Consultation</span>
@@ -34,14 +40,20 @@ export default function ContactPage() {
             <p className="text-base text-[#1C1917]/70 font-light leading-relaxed">
               Schedule a 1-on-1 session with our senior interior architects or request custom 3D furniture customization.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       <section className="py-20 bg-[#F5F2EB]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            <div className="lg:col-span-7 bg-[#EFECE4] p-8 sm:p-10 rounded-3xl border border-[#1C1917]/10 shadow-sm space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="lg:col-span-7 bg-[#EFECE4] p-8 sm:p-10 rounded-3xl border border-[#1C1917]/10 shadow-sm space-y-6"
+            >
               <div className="space-y-2">
                 <h2 className="font-serif-grains text-2xl font-bold text-[#1C1917]">
                   Book Studio Consultation
@@ -138,9 +150,15 @@ export default function ContactPage() {
                   </button>
                 </form>
               )}
-            </div>
+            </motion.div>
 
-            <div className="lg:col-span-5 space-y-8">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="lg:col-span-5 space-y-8"
+            >
               <div className="bg-[#1C1917] text-[#F5F2EB] p-8 rounded-3xl border border-[#9A7B56]/30 space-y-6">
                 <h3 className="font-serif-grains text-2xl font-bold text-white">
                   GRAINS Flagship Showroom
@@ -206,7 +224,7 @@ export default function ContactPage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

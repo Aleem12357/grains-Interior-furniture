@@ -49,10 +49,10 @@ export default function BeforeAfterSlider() {
       </div>
 
       <div
-        className="absolute inset-0 overflow-hidden"
+        className="absolute inset-0 overflow-hidden pointer-events-none"
         style={{ width: `${sliderPosition}%` }}
       >
-        <div className="relative w-full h-full min-w-[300px]">
+        <div className="absolute top-0 left-0 bottom-0 w-[100vw] max-w-7xl h-full">
           <Image
             src="/assets/IMG_20260905_235342_829.jpg"
             alt="Original Raw Space Before Design"

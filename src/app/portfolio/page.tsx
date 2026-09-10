@@ -68,9 +68,14 @@ export default function PortfolioPage() {
     <div className="min-h-screen bg-[#F5F2EB] text-[#1C1917] font-sans antialiased selection:bg-[#9A7B56] selection:text-white">
       <Navbar />
 
-      <section className="pt-32 pb-16 bg-[#EFECE4] border-b border-[#1C1917]/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl space-y-4">
+      <section className="pt-32 pb-16 bg-[#EFECE4] border-b border-[#1C1917]/10 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="max-w-3xl space-y-4"
+          >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9A7B56]/15 border border-[#9A7B56]/30 text-xs font-mono uppercase tracking-widest text-[#9A7B56]">
               <Compass className="w-3.5 h-3.5" />
               <span>Interior Architecture Portfolio</span>
@@ -81,7 +86,7 @@ export default function PortfolioPage() {
             <p className="text-base text-[#1C1917]/70 font-light leading-relaxed">
               Click any project image to open an interactive 3D WebGL volumetric layout modal.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 

@@ -6,7 +6,7 @@ import Image from "next/image";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import IntroBot from "@/components/chat/IntroBot";
-import Sofa3DCanvas from "@/components/3d/Sofa3DCanvas";
+import Generic3DFurniture from "@/components/3d/Generic3DFurniture";
 import { products } from "@/data/products";
 import {
   ArrowLeft,
@@ -26,6 +26,7 @@ export default function ProductDetailPage({
   const product = products.find((p) => p.id === resolvedParams.id);
 
   const [activeTab, setActiveTab] = useState<"3d" | "photo">("3d");
+  const [is3DRotating, setIs3DRotating] = useState(true);
   const [inquirySent, setInquirySent] = useState(false);
 
   if (!product) {
@@ -92,7 +93,30 @@ export default function ProductDetailPage({
 
               {activeTab === "3d" ? (
                 <div className="space-y-3">
-                  <Sofa3DCanvas />
+                  <div className="relative w-full h-[380px] sm:h-[480px] bg-[#EFECE4]/50 rounded-3xl border border-[#1C1917]/10 overflow-hidden shadow-inner group">
+                    <Generic3DFurniture category={product.modelCategory} isRotating={is3DRotating} />
+
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between bg-[#1C1917]/80 backdrop-blur-md px-4 py-2.5 rounded-full text-white text-xs border border-[#9A7B56]/30">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-[#9A7B56] animate-pulse" />
+                        <span className="font-mono text-[11px] uppercase tracking-wider text-[#F5F2EB]/90">
+                          {product.categoryLabel} 3D Viewport
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => setIs3DRotating(!is3DRotating)}
+                          className="px-3 py-1 bg-[#9A7B56] hover:bg-[#656D4A] rounded-full text-[10px] uppercase tracking-wider font-semibold transition-colors"
+                        >
+                          {is3DRotating ? "Pause Auto-Rotate" : "Auto Rotate"}
+                        </button>
+                        <span className="hidden sm:inline text-[10px] text-[#F5F2EB]/60">
+                          Drag to Rotate • Scroll to Zoom
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                   <p className="text-[11px] text-[#1C1917]/60 text-center font-mono">
                     * Use mouse/finger to orbit 360°, scroll to zoom, inspect joinery details.
                   </p>
