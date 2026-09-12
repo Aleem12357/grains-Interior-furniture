@@ -15,7 +15,8 @@ import {
   MapPin,
   Calendar,
   Box,
-  Maximize2
+  Maximize2,
+  Sparkles
 } from "lucide-react";
 
 const portfolioProjects = [
@@ -68,23 +69,25 @@ export default function PortfolioPage() {
     <div className="min-h-screen bg-[#F5F2EB] text-[#1C1917] font-sans antialiased selection:bg-[#9A7B56] selection:text-white">
       <Navbar />
 
+      {/* Hero Header */}
       <section className="pt-32 pb-16 bg-[#EFECE4] border-b border-[#1C1917]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9A7B56]/15 border border-[#9A7B56]/30 text-xs font-mono uppercase tracking-widest text-[#9A7B56]">
-              <Compass className="w-3.5 h-3.5" />
+              <Compass className="w-3.5 h-3.5 text-[#9A7B56]" />
               <span>Interior Architecture Portfolio</span>
             </div>
             <h1 className="font-serif-grains text-4xl sm:text-5xl font-bold text-[#1C1917] tracking-tight">
               Selected Architectural Case Studies
             </h1>
             <p className="text-base text-[#1C1917]/70 font-light leading-relaxed">
-              Click any project image to open an interactive 3D WebGL volumetric layout modal.
+              Click any project image or action button to open an interactive 3D WebGL volumetric layout modal for that room.
             </p>
           </div>
         </div>
       </section>
 
+      {/* Case Studies Grid */}
       <section className="py-20 bg-[#F5F2EB]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -109,25 +112,25 @@ export default function PortfolioPage() {
                   />
                   <div className="absolute top-4 left-4 bg-[#1C1917]/80 backdrop-blur-md text-white text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full border border-[#9A7B56]/30 flex items-center gap-1.5">
                     <Box className="w-3.5 h-3.5 text-[#9A7B56]" />
-                    <span>3D Model</span>
+                    <span>3D Room Model</span>
                   </div>
 
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="px-4 py-2 bg-[#1C1917] text-white text-xs font-mono uppercase tracking-wider rounded-full flex items-center gap-2 shadow-xl">
-                      <Maximize2 className="w-3.5 h-3.5 text-[#9A7B56]" />
-                      <span>View Interactive 3D</span>
+                  <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="px-5 py-2.5 bg-[#1C1917] text-white text-xs font-mono uppercase tracking-wider rounded-full flex items-center gap-2 shadow-2xl">
+                      <Maximize2 className="w-4 h-4 text-[#9A7B56]" />
+                      <span>Launch 3D Room Viewer</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="p-8 space-y-4">
                   <div className="flex items-center justify-between text-xs text-[#9A7B56] font-mono uppercase tracking-wider">
-                    <span className="flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5" />
+                    <span className="flex items-center gap-1 font-semibold">
+                      <MapPin className="w-3.5 h-3.5 text-[#9A7B56]" />
                       {project.location}
                     </span>
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5" />
+                    <span className="flex items-center gap-1 font-semibold">
+                      <Calendar className="w-3.5 h-3.5 text-[#9A7B56]" />
                       {project.year}
                     </span>
                   </div>
@@ -146,9 +149,9 @@ export default function PortfolioPage() {
                   <div className="pt-4 border-t border-[#1C1917]/10 flex items-center justify-between">
                     <button
                       onClick={() => setActiveProject(project)}
-                      className="text-[10px] font-mono uppercase tracking-widest text-[#9A7B56] font-semibold hover:underline"
+                      className="px-4 py-2 bg-[#1C1917] text-white hover:bg-[#9A7B56] rounded-full text-xs font-mono uppercase tracking-wider transition-colors shadow-sm"
                     >
-                      Launch 3D Room Viewer
+                      3D Room Viewer
                     </button>
                     <Link
                       href="/contact"
@@ -163,10 +166,11 @@ export default function PortfolioPage() {
             ))}
           </div>
 
+          {/* Interactive Renovation Section */}
           <div className="pt-12 border-t border-[#1C1917]/10 space-y-8">
             <div className="text-center max-w-xl mx-auto space-y-2">
               <span className="text-xs font-mono uppercase tracking-widest text-[#9A7B56]">
-                Interactive Showcase
+                Interactive Renovation Showcase
               </span>
               <h2 className="font-serif-grains text-3xl font-bold text-[#1C1917]">
                 Live Before & After Renovation
@@ -177,6 +181,7 @@ export default function PortfolioPage() {
         </div>
       </section>
 
+      {/* Interactive 3D Modal */}
       {activeProject && (
         <Image3DModal
           isOpen={!!activeProject}
@@ -184,8 +189,8 @@ export default function PortfolioPage() {
           title={activeProject.title}
           category={activeProject.modelCategory}
           imageSrc={activeProject.image}
-          materials="European White Oak, Micro-cement, Honed Travertine"
-          dimensions="Full Interior Architecture Layout"
+          materials="Solid European White Oak, Micro-cement, Honed Travertine, Bouclé Wool"
+          dimensions="Full Interior Architectural Volumetric Layout"
         />
       )}
 

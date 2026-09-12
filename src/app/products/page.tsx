@@ -13,7 +13,9 @@ import {
   Box,
   Search,
   ArrowUpRight,
-  Maximize2
+  Maximize2,
+  Sparkles,
+  SlidersHorizontal
 } from "lucide-react";
 
 const categories = [
@@ -37,7 +39,8 @@ export default function ProductsPage() {
       const matchesCategory = selectedCategory === "all" || p.category === selectedCategory;
       const matchesSearch =
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.materials.toLowerCase().includes(searchQuery.toLowerCase());
+        p.materials.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.designer.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     })
     .sort((a, b) => {
@@ -50,31 +53,33 @@ export default function ProductsPage() {
     <div className="min-h-screen bg-[#F5F2EB] text-[#1C1917] font-sans antialiased selection:bg-[#9A7B56] selection:text-white">
       <Navbar />
 
+      {/* Hero Header */}
       <section className="pt-32 pb-16 bg-[#EFECE4] border-b border-[#1C1917]/10 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9A7B56]/15 border border-[#9A7B56]/30 text-xs font-mono uppercase tracking-widest text-[#9A7B56]">
               <Box className="w-3.5 h-3.5" />
-              <span>Interactive 3D Catalog</span>
+              <span>Interactive 3D Furniture Catalog</span>
             </div>
             <h1 className="font-serif-grains text-4xl sm:text-5xl font-bold text-[#1C1917] tracking-tight">
               Curated Collections for Elevated Living
             </h1>
             <p className="text-base text-[#1C1917]/70 font-light leading-relaxed">
-              Click any furniture item or image to launch an interactive 360° WebGL 3D model modal.
+              Explore custom furniture models with real-time WebGL 3D inspection, organic wood finish toggles, and proportion details.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="py-8 bg-[#F5F2EB] border-b border-[#1C1917]/10 sticky top-[72px] z-30 backdrop-blur-md bg-[#F5F2EB]/90">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      {/* Sticky Filter Bar */}
+      <section className="py-6 bg-[#F5F2EB] border-b border-[#1C1917]/10 sticky top-[70px] z-30 backdrop-blur-xl bg-[#F5F2EB]/90 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold whitespace-nowrap transition-all duration-300 ${
+                className={`px-5 py-2 rounded-full text-xs uppercase tracking-wider font-semibold whitespace-nowrap transition-all duration-300 ${
                   selectedCategory === cat.id
                     ? "bg-[#1C1917] text-[#F5F2EB] shadow-md"
                     : "bg-[#EFECE4] text-[#1C1917]/70 hover:bg-[#9A7B56] hover:text-white"
@@ -85,12 +90,12 @@ export default function ProductsPage() {
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-1">
             <div className="relative w-full sm:w-80">
               <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#1C1917]/40" />
               <input
                 type="text"
-                placeholder="Search materials, furniture..."
+                placeholder="Search materials, furniture, designer..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-[#EFECE4] border border-[#1C1917]/15 rounded-full pl-10 pr-4 py-2 text-xs text-[#1C1917] placeholder-[#1C1917]/40 focus:outline-none focus:border-[#9A7B56]"
@@ -102,33 +107,37 @@ export default function ProductsPage() {
                 Showing {filteredProducts.length} Items
               </span>
 
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                className="bg-[#EFECE4] border border-[#1C1917]/15 rounded-full px-4 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#9A7B56] font-medium"
-              >
-                <option value="featured">Sort by: Featured</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-              </select>
+              <div className="flex items-center gap-2">
+                <SlidersHorizontal className="w-3.5 h-3.5 text-[#9A7B56]" />
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as any)}
+                  className="bg-[#EFECE4] border border-[#1C1917]/15 rounded-full px-4 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#9A7B56] font-medium"
+                >
+                  <option value="featured">Sort by: Featured</option>
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Catalog Grid */}
       <section className="py-16 bg-[#F5F2EB]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {filteredProducts.length === 0 ? (
-            <div className="text-center py-20 bg-[#EFECE4] rounded-3xl border border-[#1C1917]/10 space-y-3">
-              <p className="text-lg font-serif-grains text-[#1C1917]">
-                No matching furniture found in this category.
+            <div className="text-center py-20 bg-[#EFECE4] rounded-3xl border border-[#1C1917]/10 space-y-4">
+              <p className="text-xl font-serif-grains text-[#1C1917]">
+                No matching furniture items found.
               </p>
               <button
                 onClick={() => {
                   setSelectedCategory("all");
                   setSearchQuery("");
                 }}
-                className="px-6 py-2 bg-[#9A7B56] text-white rounded-full text-xs uppercase tracking-wider font-semibold"
+                className="px-6 py-2.5 bg-[#9A7B56] text-white rounded-full text-xs uppercase tracking-wider font-semibold shadow-md"
               >
                 Reset Filters
               </button>
@@ -144,10 +153,7 @@ export default function ProductsPage() {
                   transition={{ duration: 0.4 }}
                   className="bg-[#EFECE4] rounded-3xl overflow-hidden border border-[#1C1917]/10 flex flex-col justify-between group shadow-sm hover:shadow-2xl transition-all duration-300"
                 >
-                  <div
-                    onClick={() => setActiveModalProduct(product)}
-                    className="relative h-72 w-full overflow-hidden bg-white cursor-pointer"
-                  >
+                  <div className="relative h-72 w-full overflow-hidden bg-white">
                     <Image
                       src={product.image}
                       alt={product.name}
@@ -156,14 +162,18 @@ export default function ProductsPage() {
                     />
                     <div className="absolute top-4 left-4 bg-[#1C1917]/80 backdrop-blur-md text-[#F5F2EB] text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full border border-[#9A7B56]/30 flex items-center gap-1.5">
                       <Box className="w-3.5 h-3.5 text-[#9A7B56]" />
-                      <span>3D View</span>
+                      <span>3D Model</span>
                     </div>
 
-                    <div className="absolute top-4 right-4 bg-[#9A7B56] text-white text-[10px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-full">
+                    <div className="absolute top-4 right-4 bg-[#9A7B56] text-white text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
                       {product.categoryLabel}
                     </div>
 
-                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    {/* Quick 3D View overlay button */}
+                    <div
+                      onClick={() => setActiveModalProduct(product)}
+                      className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
+                    >
                       <div className="px-4 py-2 bg-[#1C1917] text-white text-xs font-mono uppercase tracking-wider rounded-full flex items-center gap-2 shadow-xl">
                         <Maximize2 className="w-3.5 h-3.5 text-[#9A7B56]" />
                         <span>Launch 3D Modal</span>
@@ -173,12 +183,12 @@ export default function ProductsPage() {
 
                   <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                     <div>
-                      <h3
-                        onClick={() => setActiveModalProduct(product)}
-                        className="font-serif-grains text-xl font-bold text-[#1C1917] group-hover:text-[#9A7B56] transition-colors cursor-pointer"
+                      <Link
+                        href={`/products/${product.id}`}
+                        className="font-serif-grains text-xl font-bold text-[#1C1917] hover:text-[#9A7B56] transition-colors block"
                       >
                         {product.name}
-                      </h3>
+                      </Link>
                       <p className="text-xs text-[#1C1917]/70 font-light mt-2 line-clamp-2 leading-relaxed">
                         {product.description}
                       </p>
@@ -205,13 +215,22 @@ export default function ProductsPage() {
                         </span>
                       </div>
 
-                      <button
-                        onClick={() => setActiveModalProduct(product)}
-                        className="px-5 py-2.5 bg-[#1C1917] text-white hover:bg-[#9A7B56] rounded-full text-xs uppercase tracking-widest font-semibold transition-all duration-300 flex items-center gap-1.5 group/btn shadow-md"
-                      >
-                        <span>Interactive 3D</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => setActiveModalProduct(product)}
+                          className="px-3.5 py-2 bg-[#EFECE4] hover:bg-[#9A7B56] hover:text-white text-[#1C1917] rounded-full text-xs uppercase tracking-wider font-semibold border border-[#1C1917]/15 transition-all"
+                          title="Quick 3D View"
+                        >
+                          Quick 3D
+                        </button>
+                        <Link
+                          href={`/products/${product.id}`}
+                          className="px-4 py-2 bg-[#1C1917] text-white hover:bg-[#9A7B56] rounded-full text-xs uppercase tracking-wider font-semibold transition-all flex items-center gap-1 shadow-md"
+                        >
+                          <span>Details</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </motion.div>

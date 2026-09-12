@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  MessageSquare,
   X,
   Sparkles,
   Send,
@@ -14,6 +13,9 @@ import {
   ChevronRight,
   Bot,
   User,
+  Palette,
+  Layers,
+  HelpCircle
 } from "lucide-react";
 
 type Option = {
@@ -35,7 +37,7 @@ const initialMessages: Message[] = [
   {
     id: "1",
     sender: "bot",
-    text: "Welcome to GRAINS Interior & Furniture! I'm your AI Design Assistant. How can I help elevate your living space today?",
+    text: "Welcome to GRAINS Interior & Furniture! I'm your AI Design Assistant. How can I help elevate your living sanctuary today?",
     options: [
       {
         label: "Browse 3D Furniture Catalog",
@@ -49,16 +51,15 @@ const initialMessages: Message[] = [
         icon: <Compass className="w-3.5 h-3.5 text-[#9A7B56]" />,
       },
       {
+        label: "Ask Timber & Material Advice",
+        value: "materials",
+        icon: <Palette className="w-3.5 h-3.5 text-[#9A7B56]" />,
+      },
+      {
         label: "Schedule Consultation",
         value: "consultation",
         icon: <Calendar className="w-3.5 h-3.5 text-[#9A7B56]" />,
         href: "/contact",
-      },
-      {
-        label: "View Interior Portfolio",
-        value: "portfolio",
-        icon: <Sparkles className="w-3.5 h-3.5 text-[#9A7B56]" />,
-        href: "/portfolio",
       },
     ],
     timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
@@ -111,7 +112,7 @@ export default function IntroBot() {
         botResponse = {
           id: (Date.now() + 1).toString(),
           sender: "bot",
-          text: "What best describes your ideal living atmosphere?",
+          text: "What best describes your ideal living sanctuary atmosphere?",
           options: [
             { label: "Warm Japandi / Organic Modern", value: "quiz_japandi" },
             { label: "Sleek Architectural Minimalism", value: "quiz_minimalist" },
@@ -130,13 +131,24 @@ export default function IntroBot() {
           ],
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         };
+      } else if (option.value === "materials") {
+        botResponse = {
+          id: (Date.now() + 1).toString(),
+          sender: "bot",
+          text: "GRAINS uses 100% sustainably harvested European White Oak, Italian Walnut, and honed Travertine Marble. All finishes are treated with natural non-toxic organic oils.",
+          options: [
+            { label: "View Our Philosophy", value: "about", href: "/about" },
+            { label: "Explore Collections", value: "catalog", href: "/products" },
+          ],
+          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        };
       } else if (option.value === "consultation") {
         botResponse = {
           id: (Date.now() + 1).toString(),
           sender: "bot",
-          text: "We offer private 1-on-1 consultations with our senior interior architects. Click below to reserve your slot.",
+          text: "We offer private 1-on-1 consultations with our senior interior architects. Click below to reserve your appointment.",
           options: [
-            { label: "Book Free Consultation", value: "go_contact", href: "/contact" },
+            { label: "Book Free Studio Consultation", value: "go_contact", href: "/contact" },
           ],
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         };
@@ -144,7 +156,7 @@ export default function IntroBot() {
         botResponse = {
           id: (Date.now() + 1).toString(),
           sender: "bot",
-          text: "How else can I assist your design journey?",
+          text: "How else can I assist your architectural design journey?",
           options: initialMessages[0].options,
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         };
@@ -152,7 +164,7 @@ export default function IntroBot() {
 
       setMessages((prev) => [...prev, botResponse]);
       setIsTyping(false);
-    }, 800);
+    }, 700);
   };
 
   const handleSendMessage = (e: React.FormEvent) => {
@@ -186,17 +198,18 @@ export default function IntroBot() {
 
       setMessages((prev) => [...prev, botResponse]);
       setIsTyping(false);
-    }, 1000);
+    }, 900);
   };
 
   return (
     <>
+      {/* Floating Toggle Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="relative group p-4 rounded-full bg-[#1C1917] text-[#F5F2EB] shadow-2xl border border-[#9A7B56]/50 flex items-center justify-center hover:bg-[#9A7B56] transition-colors duration-300"
+          className="relative group p-4 rounded-full bg-[#1C1917] text-[#F5F2EB] shadow-2xl border border-[#9A7B56]/60 flex items-center justify-center hover:bg-[#9A7B56] transition-colors duration-300"
           aria-label="Toggle AI Intro Bot"
         >
           <span className="absolute -inset-1 rounded-full bg-[#9A7B56]/30 animate-ping opacity-75 pointer-events-none" />
@@ -218,6 +231,7 @@ export default function IntroBot() {
         </motion.button>
       </div>
 
+      {/* Chat Drawer Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -225,15 +239,16 @@ export default function IntroBot() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 max-h-[550px] h-[520px] bg-[#F5F2EB] rounded-2xl shadow-2xl border border-[#1C1917]/15 flex flex-col overflow-hidden"
+            className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 max-h-[550px] h-[520px] bg-[#F5F2EB] rounded-3xl shadow-2xl border border-[#1C1917]/15 flex flex-col overflow-hidden"
           >
+            {/* Header */}
             <div className="bg-[#1C1917] px-5 py-4 text-[#F5F2EB] flex items-center justify-between border-b border-[#9A7B56]/30">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full bg-[#9A7B56]/20 border border-[#9A7B56] flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-[#9A7B56]" />
                 </div>
                 <div>
-                  <h3 className="font-serif-grains text-sm font-semibold tracking-wide text-white">
+                  <h3 className="font-serif-grains text-sm font-bold tracking-wide text-white">
                     GRAINS Assistant
                   </h3>
                   <div className="flex items-center gap-1.5">
@@ -252,6 +267,7 @@ export default function IntroBot() {
               </button>
             </div>
 
+            {/* Chat Body */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#F5F2EB]">
               {messages.map((msg) => (
                 <div
@@ -289,6 +305,7 @@ export default function IntroBot() {
                     </div>
                   </div>
 
+                  {/* Option Buttons */}
                   {msg.options && (
                     <div className="mt-2 pl-9 space-y-1.5 w-full">
                       {msg.options.map((opt, i) =>
@@ -339,6 +356,7 @@ export default function IntroBot() {
               <div ref={messagesEndRef} />
             </div>
 
+            {/* Form Input */}
             <form
               onSubmit={handleSendMessage}
               className="p-3 bg-white border-t border-[#1C1917]/10 flex items-center gap-2"

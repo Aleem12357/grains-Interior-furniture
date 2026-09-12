@@ -2,15 +2,22 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import IntroBot from "@/components/chat/IntroBot";
+import Generic3DFurniture from "@/components/3d/Generic3DFurniture";
 import {
   Compass,
   ShieldCheck,
   Award,
   Feather,
   CheckCircle2,
+  Box,
+  ArrowUpRight,
+  Sparkles,
+  PhoneCall
 } from "lucide-react";
 
 export default function AboutPage() {
@@ -18,27 +25,34 @@ export default function AboutPage() {
     <div className="min-h-screen bg-[#F5F2EB] text-[#1C1917] font-sans antialiased selection:bg-[#9A7B56] selection:text-white">
       <Navbar />
 
+      {/* Hero Banner */}
       <section className="pt-32 pb-20 bg-[#EFECE4] border-b border-[#1C1917]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9A7B56]/15 border border-[#9A7B56]/30 text-xs font-mono uppercase tracking-widest text-[#9A7B56]">
-              <Feather className="w-3.5 h-3.5" />
+              <Feather className="w-3.5 h-3.5 text-[#9A7B56]" />
               <span>Our Brand Philosophy</span>
             </div>
             <h1 className="font-serif-grains text-4xl sm:text-5xl font-bold text-[#1C1917] tracking-tight">
               Where Organic Timber Grain Meets Architectural Precision
             </h1>
             <p className="text-base text-[#1C1917]/70 font-light leading-relaxed">
-              GRAINS was founded on a singular principle: interior spaces should inspire absolute tranquility, combining natural tactile materials with modern 3D spatial technology.
+              GRAINS was founded on a singular principle: interior spaces should inspire absolute tranquility, combining natural tactile timber with modern WebGL 3D spatial technology.
             </p>
           </div>
         </div>
       </section>
 
+      {/* Heritage & 3D Interactive Story */}
       <section className="py-20 bg-[#F5F2EB]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-6 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="lg:col-span-6 space-y-6"
+            >
               <span className="text-xs font-mono uppercase tracking-widest text-[#9A7B56]">
                 The GRAINS Heritage
               </span>
@@ -46,7 +60,7 @@ export default function AboutPage() {
                 Sculpting Furniture as Living Architectural Art
               </h2>
               <p className="text-sm text-[#1C1917]/80 font-light leading-relaxed">
-                We believe that every piece of furniture carries a story carved directly into its wood grain. By pairing traditional joinery techniques with real-time 3D WebGL visualization, GRAINS allows homeowners and architects to interactively experience their interiors before a single piece of timber is cut.
+                We believe that every piece of furniture carries a story carved directly into its wood grain. By pairing traditional European joinery techniques with real-time 3D WebGL visualization, GRAINS allows homeowners and architects to interactively experience their interiors before a single piece of timber is cut.
               </p>
 
               <div className="space-y-3 pt-2">
@@ -62,23 +76,41 @@ export default function AboutPage() {
                   </div>
                 ))}
               </div>
-            </div>
 
-            <div className="lg:col-span-6">
-              <div className="relative h-[480px] w-full rounded-3xl overflow-hidden border border-[#1C1917]/10 shadow-xl">
-                <Image
-                  src="/assets/IMG_20260905_235346_786.jpg"
-                  alt="Master Woodworker crafting GRAINS furniture"
-                  fill
-                  className="object-cover"
-                />
+              <div className="pt-4">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#1C1917] text-white hover:bg-[#9A7B56] text-xs uppercase tracking-widest font-semibold rounded-full transition-colors shadow-md"
+                >
+                  <PhoneCall className="w-4 h-4 text-[#9A7B56]" />
+                  <span>Book Studio Consultation</span>
+                </Link>
               </div>
-            </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="lg:col-span-6 space-y-6"
+            >
+              <div className="relative h-[360px] sm:h-[420px] w-full rounded-3xl overflow-hidden border border-[#1C1917]/10 bg-[#EFECE4] shadow-xl">
+                <Generic3DFurniture category="interior" isRotating={true} finish="sage" />
+                <div className="absolute bottom-4 left-4 right-4 bg-[#1C1917]/85 backdrop-blur-md px-4 py-2 rounded-full text-white text-[11px] border border-[#9A7B56]/30 flex items-center justify-between">
+                  <span className="font-mono text-[#9A7B56] flex items-center gap-1.5">
+                    <Box className="w-3.5 h-3.5" />
+                    Spatial 3D Volumetric Studio
+                  </span>
+                  <span className="text-[10px] text-white/70">Drag to Orbit</span>
+                </div>
+              </div>
+            </motion.div>
           </div>
 
+          {/* 3 Core Pillars */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12 border-t border-[#1C1917]/10">
-            <div className="bg-[#EFECE4] p-8 rounded-3xl border border-[#1C1917]/10 space-y-4">
-              <div className="w-10 h-10 rounded-full bg-[#9A7B56] text-white flex items-center justify-center">
+            <div className="bg-[#EFECE4] p-8 rounded-3xl border border-[#1C1917]/10 space-y-4 shadow-sm hover:shadow-lg transition-all">
+              <div className="w-10 h-10 rounded-full bg-[#9A7B56] text-white flex items-center justify-center shadow-md">
                 <Compass className="w-5 h-5" />
               </div>
               <h3 className="font-serif-grains text-xl font-bold text-[#1C1917]">
@@ -89,8 +121,8 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="bg-[#EFECE4] p-8 rounded-3xl border border-[#1C1917]/10 space-y-4">
-              <div className="w-10 h-10 rounded-full bg-[#656D4A] text-white flex items-center justify-center">
+            <div className="bg-[#EFECE4] p-8 rounded-3xl border border-[#1C1917]/10 space-y-4 shadow-sm hover:shadow-lg transition-all">
+              <div className="w-10 h-10 rounded-full bg-[#656D4A] text-white flex items-center justify-center shadow-md">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <h3 className="font-serif-grains text-xl font-bold text-[#1C1917]">
@@ -101,8 +133,8 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="bg-[#EFECE4] p-8 rounded-3xl border border-[#1C1917]/10 space-y-4">
-              <div className="w-10 h-10 rounded-full bg-[#1C1917] text-white flex items-center justify-center">
+            <div className="bg-[#EFECE4] p-8 rounded-3xl border border-[#1C1917]/10 space-y-4 shadow-sm hover:shadow-lg transition-all">
+              <div className="w-10 h-10 rounded-full bg-[#1C1917] text-white flex items-center justify-center shadow-md">
                 <Award className="w-5 h-5 text-[#9A7B56]" />
               </div>
               <h3 className="font-serif-grains text-xl font-bold text-[#1C1917]">
